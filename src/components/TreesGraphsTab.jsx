@@ -182,7 +182,7 @@ function TreesGraphsTab() {
                 <strong className="text-space-cyan">Binary Tree:</strong> Each node has at most 2 children
               </div>
               <div className="bg-space-dark/30 p-4 rounded-lg">
-                <strong className="text-space-cyan">Binary Search Tree (BST):</strong> Left child < parent < right child
+                <strong className="text-space-cyan">Binary Search Tree (BST):</strong> Left child &lt; parent &lt; right child
               </div>
               <div className="bg-space-dark/30 p-4 rounded-lg">
                 <strong className="text-space-cyan">Balanced Tree:</strong> Height difference between subtrees ≤ 1
