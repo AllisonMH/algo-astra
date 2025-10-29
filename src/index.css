@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #0a0e27 0%, #1e3a8a 100%);
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .space-gradient {
+    background: linear-gradient(135deg, #0a0e27 0%, #1e3a8a 50%, #6366f1 100%);
+  }
+
+  .card-space {
+    @apply bg-gradient-to-br from-space-blue to-space-purple rounded-xl shadow-lg border border-space-cyan/30;
+  }
+
+  .btn-space {
+    @apply bg-gradient-to-r from-space-purple to-space-pink text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200;
+  }
+
+  .star-field {
+    background-image:
+      radial-gradient(2px 2px at 20px 30px, white, transparent),
+      radial-gradient(2px 2px at 60px 70px, white, transparent),
+      radial-gradient(1px 1px at 50px 50px, white, transparent),
+      radial-gradient(1px 1px at 130px 80px, white, transparent),
+      radial-gradient(2px 2px at 90px 10px, white, transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+}
