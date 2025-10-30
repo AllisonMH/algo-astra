@@ -63,10 +63,7 @@ An interactive, space-themed educational platform for learning data structures a
 - **GraphQL 16.9.0** - Type-safe API
 - **graphql-http 1.22.0** - Modern HTTP server
 - **Express 4.19.2** - Web server framework
-
-### Deployment
-- **Vercel** - Serverless deployment platform
-- **Serverless Functions** - Auto-scaling backend
+- **CORS 2.8.5** - Cross-origin resource sharing
 
 ---
 
@@ -90,13 +87,11 @@ npm install
 ### Development
 
 ```bash
-# Option 1: Run frontend only (production mode - uses serverless function)
-npm run dev
-
-# Option 2: Run with standalone GraphQL server (development mode)
+# Start the GraphQL server
 # Terminal 1
 npm run server
 
+# Start the dev server
 # Terminal 2
 npm run dev
 ```
@@ -121,40 +116,52 @@ npm run preview
 |----------|-------------|
 | [**ARCHITECTURE.md**](./ARCHITECTURE.md) | Complete technical architecture, components, and data flow |
 | [**Claude.md**](./Claude.md) | Detailed project overview, features, and tech stack |
-| [**VERCEL_DEPLOYMENT.md**](./VERCEL_DEPLOYMENT.md) | Step-by-step Vercel deployment guide |
 
 ### Key Concepts
 
 - **Component Structure**: 6 main tabs, each with specialized functionality
 - **State Management**: React hooks + Apollo Client cache
 - **Styling**: Custom space theme with Tailwind utilities
-- **Backend**: GraphQL serverless function or standalone Express server
-- **Data**: In-memory storage (upgradeable to Vercel KV or database)
+- **Backend**: Standalone Express GraphQL server
+- **Data**: In-memory storage (upgradeable to any database)
 
 ---
 
 ## 🌐 Deployment
 
-### Deploy to Vercel (Recommended)
+This app consists of two parts that need to be deployed:
 
-1. **Push to GitHub** (already configured)
+### Frontend (Static Site)
 
-2. **Import to Vercel**:
-   - Visit [vercel.com](https://vercel.com)
-   - Click "Add New Project"
-   - Import your repository
-   - Vercel auto-detects Vite configuration
+The React app can be deployed to any static hosting service:
+- **Netlify** - Drag and drop the `dist/` folder
+- **GitHub Pages** - Push the `dist/` folder
+- **Render** - Connect your repository
+- **Any static host** - Upload the `dist/` folder
 
-3. **Deploy**: Click "Deploy" and wait ~2 minutes
+**Build Command**: `npm run build`
+**Output Directory**: `dist/`
 
-### Configuration
+### Backend (GraphQL Server)
 
-The project includes:
-- ✅ `vercel.json` - Deployment configuration
-- ✅ `api/graphql.js` - Serverless GraphQL endpoint
-- ✅ Automatic HTTPS and CDN distribution
+The Express GraphQL server can be deployed to:
+- **Railway** - Easy Node.js deployment
+- **Render** - Free Node.js hosting
+- **Heroku** - Classic platform-as-a-service
+- **DigitalOcean App Platform** - Simple deployment
+- **Any Node.js host** - VPS or cloud server
 
-See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for detailed instructions.
+**Start Command**: `npm run server`
+**Port**: 4000 (configurable via environment variable)
+
+### Environment Variables
+
+Set on your frontend hosting:
+```bash
+VITE_GRAPHQL_URL=https://your-backend-url.com/graphql
+```
+
+This tells the frontend where to find your GraphQL API.
 
 ---
 
@@ -162,16 +169,17 @@ See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for detailed instructions.
 
 ```
 algo-astra/
-├── api/                      # Serverless functions
-│   └── graphql.js           # GraphQL endpoint
 ├── src/
 │   ├── components/          # React components (6 tabs)
 │   ├── data/                # Quiz questions
 │   ├── graphql/             # Apollo Client setup
 │   └── App.jsx              # Main application
-├── dist/                    # Production build
-├── server/                  # Standalone server (dev)
-└── vercel.json              # Vercel configuration
+├── server/                  # Express GraphQL server
+│   ├── index.js            # Server entry point
+│   └── schema/             # GraphQL schema & resolvers
+├── dist/                    # Production build output
+├── public/                  # Static assets
+└── package.json            # Dependencies & scripts
 ```
 
 ---

@@ -101,9 +101,9 @@ An interactive, space-themed educational platform for learning data structures a
                     HTTP/GraphQL
                          │
 ┌────────────────────────┼──────────────────────────────────┐
-│                SERVER SIDE (Vercel)                        │
+│                SERVER SIDE (Express)                       │
 │  ┌─────────────────────▼──────────────────────────────┐   │
-│  │          Serverless Function (/api/graphql.js)     │   │
+│  │        Express GraphQL Server (Port 4000)          │   │
 │  │                                                      │   │
 │  │  ┌──────────────────────────────────────────────┐  │   │
 │  │  │         GraphQL Schema & Resolvers           │  │   │
@@ -114,7 +114,7 @@ An interactive, space-themed educational platform for learning data structures a
 │  │                                                      │   │
 │  │  ┌──────────────────────────────────────────────┐  │   │
 │  │  │         In-Memory Data Store                 │  │   │
-│  │  │  (Can be upgraded to Vercel KV/Database)    │  │   │
+│  │  │  (Can be upgraded to any database)           │  │   │
 │  │  └──────────────────────────────────────────────┘  │   │
 │  └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
@@ -150,8 +150,6 @@ graph TB
 
 ```
 algo-astra/
-├── 📁 api/
-│   └── graphql.js                    # Vercel serverless GraphQL endpoint
 ├── 📁 dist/                           # Production build output
 │   ├── assets/
 │   │   ├── index-[hash].js           # Bundled JavaScript
@@ -160,8 +158,8 @@ algo-astra/
 │   └── rocket.svg                     # App icon
 ├── 📁 public/
 │   └── rocket.svg                     # Static assets
-├── 📁 server/                         # Standalone server (dev/alternative)
-│   ├── index.js                       # Express server
+├── 📁 server/                         # Express GraphQL server
+│   ├── index.js                       # Express server entry
 │   └── schema/
 │       ├── schema.js                  # GraphQL schema definition
 │       └── resolvers.js               # GraphQL resolvers
@@ -184,7 +182,6 @@ algo-astra/
 ├── index.html                        # HTML entry point
 ├── vite.config.js                    # Vite configuration
 ├── tailwind.config.js                # Tailwind configuration
-├── vercel.json                       # Vercel deployment config
 └── package.json                      # Dependencies & scripts
 ```
 
@@ -439,61 +436,77 @@ mutation SaveQuizResult($input: QuizResultInput!) {
 
 ### Data Storage
 
-**Current**: In-memory storage (serverless function scope)
+**Current**: In-memory storage (Express server scope)
 - Fast and simple
-- Resets on function cold start
+- Resets on server restart
 - Suitable for demo/testing
 
 **Production Options**:
-1. **Vercel KV** (Redis) - Fast, serverless-friendly
-2. **Vercel Postgres** - Relational database
-3. **MongoDB Atlas** - NoSQL database
-4. **Supabase** - PostgreSQL + real-time features
+1. **MongoDB Atlas** - NoSQL database, free tier available
+2. **PostgreSQL** - Relational database (Supabase, Railway, etc.)
+3. **Redis** - Fast key-value store
+4. **Supabase** - PostgreSQL + real-time features + auth
 
 ---
 
 ## 🚀 Deployment
 
-### Vercel Configuration
+### Two-Part Deployment
 
-```json
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
-  "rewrites": [
-    {
-      "source": "/api/graphql",
-      "destination": "/api/graphql.js"
-    }
-  ]
-}
-```
+This app requires deploying both frontend and backend separately:
+
+**Frontend (Static Site):**
+- Deploy `dist/` folder to any static host
+- Options: Netlify, GitHub Pages, Render, etc.
+- Build command: `npm run build`
+- Output directory: `dist/`
+
+**Backend (GraphQL Server):**
+- Deploy as Node.js application
+- Options: Railway, Render, Heroku, DigitalOcean, etc.
+- Start command: `npm run server`
+- Port: 4000 (or environment variable)
 
 ### Build Process
 
-1. **Development**: `npm run dev`
+1. **Development**:
+   ```bash
+   # Terminal 1: Start GraphQL server
+   npm run server
+
+   # Terminal 2: Start Vite dev server
+   npm run dev
+   ```
    - Vite dev server on port 3000
    - Hot module replacement (HMR)
    - GraphQL server on port 4000
 
-2. **Production Build**: `npm run build`
+2. **Production Build**:
+   ```bash
+   npm run build
+   ```
    - Vite optimizes and bundles code
    - Tailwind purges unused CSS
    - Output to `dist/` directory
    - Assets hashed for caching
 
-3. **Deployment**: Automatic via Vercel
-   - GitHub integration triggers build
-   - Serverless functions deployed
-   - CDN distribution worldwide
-   - HTTPS automatic
+3. **Deployment Steps**:
+   - Build frontend locally or via CI/CD
+   - Deploy `dist/` to static host
+   - Deploy server to Node.js host
+   - Configure CORS on server for frontend domain
 
 ### Environment Variables
 
+**Frontend:**
 ```bash
-# Optional - defaults to /api/graphql in production
-VITE_GRAPHQL_URL=https://your-api.com/graphql
+VITE_GRAPHQL_URL=https://your-backend-url.com/graphql
+```
+
+**Backend:**
+```bash
+PORT=4000
+NODE_ENV=production
 ```
 
 ---
