@@ -57,3 +57,5 @@ Open Source - Built for the coding community
 ---
 
 Made with ❤️ | Where Space Meets Algorithms ✨
+
+Made with 💜 by [Kolor Koded Enterprises](https://www.kolorkodedenterprises.com/)
