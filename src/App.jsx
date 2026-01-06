@@ -91,6 +91,17 @@ function App() {
         <div className="container mx-auto px-4 text-center text-space-cyan">
           <p>Algo Astra - Your Journey Through Space and Algorithms</p>
           <p className="text-sm mt-2 opacity-75">Built with React, Vite, Tailwind CSS & GraphQL</p>
+          <p className="text-sm mt-2">
+            Made with 💜 by{' '}
+            <a
+              href="https://www.kolorkodedenterprises.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-space-purple hover:text-space-pink transition-colors underline"
+            >
+              Kolor Koded Enterprises
+            </a>
+          </p>
         </div>
       </footer>
     </div>
