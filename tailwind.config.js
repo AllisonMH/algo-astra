@@ -8,11 +8,11 @@ export default {
     extend: {
       colors: {
         space: {
-          dark: '#0a0e27',
-          blue: '#1e3a8a',
-          purple: '#6366f1',
-          cyan: '#06b6d4',
-          pink: '#ec4899',
+          dark: '#400B6E',
+          blue: '#9F7BED',
+          purple: '#9F7BED',
+          cyan: '#DDBBFF',
+          pink: '#DEC5EB',
         },
       },
       animation: {
