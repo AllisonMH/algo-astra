@@ -4,6 +4,10 @@
 
 An interactive, space-themed educational platform for learning data structures and algorithms through engaging visualizations and quizzes.
 
+## 🌐 Live Demo
+
+**[View Live Site →](https://algo-astra.vercel.app/)**
+
 ## Features
 
 - 🛸 **Arrays & Lists** - Interactive array visualizer and linked list builder
@@ -52,4 +56,4 @@ Open Source - Built for the coding community
 
 ---
 
-Made with ❤️ | Where Space Meets Algorithms ✨
+Made with 💜 by [Kolor Koded Enterprises](https://www.kolorkodedenterprises.com/)
